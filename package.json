@@ -1,0 +1,41 @@
+{
+  "name": "root",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "lerna exec --parallel -- yarn build",
+    "lint": "lerna run lint --stream --no-bail",
+    "start": "yarn --cwd packages/demo dev",
+    "doc": "start-storybook -p 5555"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/preset-react": "^7.8.3",
+    "@storybook/addon-a11y": "^5.3.12",
+    "@storybook/addon-console": "^1.2.1",
+    "@storybook/addon-docs": "^5.3.12",
+    "@storybook/polymer": "^5.3.12",
+    "@storybook/react": "^5.3.12",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-styled-components": "^1.10.7",
+    "lerna": "^3.20.2",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-is": "^16.12.0",
+    "storybook-addon-material-ui": "^0.9.0-alpha.21",
+    "webpack": "^4.41.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lerna run precommit --concurrency 1 --stream"
+    }
+  },
+  "dependencies": {
+    "husky": "^4.2.3"
+  }
+}

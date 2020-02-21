@@ -1,0 +1,10 @@
+.toolbar-popup .leaflet-popup-content-wrapper {
+  height: 0px;
+  background: unset;
+  box-shadow: unset;
+}
+.toolbar-popup .leaflet-popup-tip-container,
+.toolbar-popup .leaflet-popup-close-button
+{
+  display: none;
+}

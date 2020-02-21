@@ -1,0 +1,3 @@
+"{lib,layout,components,pages}/**/*.{js,jsx}":
+  - prettier --write
+  - eslint --fix

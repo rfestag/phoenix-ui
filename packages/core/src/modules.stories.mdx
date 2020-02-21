@@ -1,0 +1,73 @@
+import { Meta, Story, Preview } from "@storybook/addon-docs/blocks";
+
+<Meta title="Core/Modules" />
+
+# What is a module?
+
+In Phoenix UI, a module is a reducer-based React context and a common set of actions for affecting the state.
+It is modeled after Redux in that you dispatch the actions to the reducer. A module may also provide
+some common components that are already integrated with the context. Others may simply provide common
+state and actions to be used by others.
+
+# Creating a context
+
+You can use `createContext` to wrap a React context with a reducer and default state. It should be used
+with all modules
+
+Generally, you will start by creating a file that defines actions
+
+```javascript title="actions.js"
+export const INCREMENT = "INCREMENT";
+export const increment = () => ({ type: INCREMENT });
+```
+
+Then you will use `createContext` to handle the boilerplate. Simply define
+some default state and a reducer function.
+
+```javascript title="context.js"
+import { createContext } from "@phoenix-ui/core"
+import { INCREMENT } from "./actions"
+
+const DEFAULT_STATE = {count: 0}
+const reducer = (state, { type, payload }) => {
+  switch type {
+    case INCREMENT: {
+      return {...state, count: state.count+1}
+    }
+  }
+  return state
+}
+
+export const [MyContext, MyContextProvider, MyContextConsumer] = createContext(
+  reducer,
+  DEFAULT_STATE
+)
+```
+
+In your widgets, use the actions you defined and the `dispatch` function to
+update the state.
+
+```javascript title="Widet.jsx"
+import React, { useContext } from "react";
+import { increment } from "./actions";
+
+export const Widget = () => {
+  const { state, dispatch } = useContext(MyContext);
+  const { count } = state;
+  return <button onClick={() => dispatch(increment())}>{count}</button>;
+};
+```
+
+In order to use the module's reducer, you need to use the
+generated Provider instead of the context's default provider
+
+```javascript title="App.jsx"
+import { MyContextProvider } from "./context";
+export const App = () => (
+  <div>
+    <MyContextProvider initialState={{ count: 1 }}>
+      <Widget />
+    </MyContextProvider>
+  </div>
+);
+```
